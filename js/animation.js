@@ -1,17 +1,22 @@
 import anime from "./anime.es.js";
+
 export function draw() {
-  let square = document.getElementById("square");
-  const gen = generatePosition();
-  anime({
-    targets: square,
-    translateX: gen,
-    delay: 1000,
-    direction: "alternate",
-    loop: true,
-    easing: "easeInOutCirc",
-  });
+  var animation = anime
+    .timeline({
+      targets: ".square",
+      delay: 100,
+      direction: "alternate",
+      easing: "easeInOutSine",
+      complete: function () {
+        animation.restart;
+        console.log("hloa");
+      },
+    })
+    .add({
+      translateX: generatePosition().next().value,
+    });
 }
 
 function* generatePosition() {
-  yield Math.floor(Math.random() * 255) + 1;
+  yield Math.floor(Math.random() * window.innerWidth) + 1;
 }
